@@ -10,6 +10,7 @@ using Entities.DTOs;
 using FluentValidation;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 
 namespace Business.Concrete
@@ -17,18 +18,29 @@ namespace Business.Concrete
     public class CarManager : ICarService
     {
         ICarDal _carDal;
+        IBrandService _brandService;
 
-        public CarManager(ICarDal carDal)
+        public CarManager(ICarDal carDal, IBrandService brandService)
         {
             _carDal = carDal;
+            _brandService = brandService;
         }
 
 
         [ValidationAspect(typeof(CarValidator))]
         public IResult Add(Car car)
         {
-            _carDal.Add(car);
-            return new SuccessResult(Messages.CarAdded);
+            if (CheckIfCarCountOfBrandCorrect(car.BrandId).Success)
+            {
+                if (CheckIfCarDescriptionOfExists(car.Description).Success)
+                {
+                    _carDal.Add(car);
+                    return new SuccessResult(Messages.CarAdded);
+                }
+                
+            }
+            return new ErrorResult();
+            
         }
 
         public IResult Delete(Car car)
@@ -64,5 +76,31 @@ namespace Business.Concrete
             _carDal.Update(car);
             return new SuccessResult(Messages.CarUpdated);
         }
+
+
+        private IResult CheckIfCarCountOfBrandCorrect(int brandId)
+        {
+            var result = _carDal.GetAll(c => c.BrandId == brandId).Count;
+            if (result >= 10)
+            {
+                return new ErrorResult();
+            }
+            return new SuccessResult();
+        }
+
+
+        private IResult CheckIfCarDescriptionOfExists(string description)
+        {
+            //Any()= Linq özelliğidir. Aynı isimden başka araç ismi olamaz.
+
+            var result = _carDal.GetAll(c => c.Description == description).Any();
+            if (result)
+            {
+                return new ErrorResult();
+            }
+            return new SuccessResult();
+        }
+
+
     }
 }
