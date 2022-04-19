@@ -59,7 +59,7 @@ namespace ConsoleUI
 
         private static void CarTest()
         {
-            CarManager carManager = new CarManager(new EfCarDal());
+            CarManager carManager = new CarManager(new EfCarDal(), new BrandManager(new EfBrandDal()));
             
             carManager.Add(new Car
             {

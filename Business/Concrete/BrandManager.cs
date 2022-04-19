@@ -42,9 +42,9 @@ namespace Business.Concrete
             
         }
 
-        public IDataResult<List<Brand>> GetAllById(int brandId)
+        public IDataResult<Brand> GetById(int brandId)
         {
-            throw new NotImplementedException();
+            return new SuccessDataResult<Brand>(_brandDal.Get(b => b.BrandId == brandId));
         }
 
         public IResult Update(Brand brand)

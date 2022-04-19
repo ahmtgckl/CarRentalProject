@@ -3,6 +3,7 @@ using Business.Constants;
 using Business.ValidationRules.FluentValidation;
 using Core.Aspects.Autofac.Validation;
 using Core.CrossCuttingConcerns.Validation;
+using Core.Utilities.Business;
 using Core.Utilities.Results;
 using DataAccess.Abstract;
 using Entities.Concrete;
@@ -30,16 +31,20 @@ namespace Business.Concrete
         [ValidationAspect(typeof(CarValidator))]
         public IResult Add(Car car)
         {
-            if (CheckIfCarCountOfBrandCorrect(car.BrandId).Success)
+            IResult result = BusinessRules.Run(
+                CheckIfCarDescriptionOfExists(car.Description), 
+                CheckIfCarCountOfBrandCorrect(car.BrandId), 
+                CheckIfBrandLimitExceded()
+
+                );
+            
+            if (result != null)
             {
-                if (CheckIfCarDescriptionOfExists(car.Description).Success)
-                {
-                    _carDal.Add(car);
-                    return new SuccessResult(Messages.CarAdded);
-                }
-                
+                return result;
             }
-            return new ErrorResult();
+            _carDal.Add(car);
+
+            return new SuccessResult(Messages.CarAdded);
             
         }
 
@@ -78,6 +83,11 @@ namespace Business.Concrete
         }
 
 
+
+
+
+
+
         private IResult CheckIfCarCountOfBrandCorrect(int brandId)
         {
             var result = _carDal.GetAll(c => c.BrandId == brandId).Count;
@@ -95,6 +105,18 @@ namespace Business.Concrete
 
             var result = _carDal.GetAll(c => c.Description == description).Any();
             if (result)
+            {
+                return new ErrorResult();
+            }
+            return new SuccessResult();
+        }
+
+
+
+        private IResult CheckIfBrandLimitExceded()
+        {
+            var result = _brandService.GetAll();
+            if (result.Data.Count > 15)
             {
                 return new ErrorResult();
             }
