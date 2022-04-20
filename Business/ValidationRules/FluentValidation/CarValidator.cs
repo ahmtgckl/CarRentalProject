@@ -10,20 +10,11 @@ namespace Business.ValidationRules.FluentValidation
     {
         public CarValidator()
         {
-            RuleFor(c => c.Description).NotEmpty();
-            RuleFor(c => c.Description).MinimumLength(2);
             RuleFor(c => c.DailyPrice).NotEmpty();
-            RuleFor(c => c.DailyPrice).GreaterThan(0);
-
-            /// olmayan bir özellik eklerken kullanılan komut (araç isimleri a ile başlasın)
-            RuleFor(c => c.Description).Must(StartWithA).WithMessage("Araç isimleri A harfi ile başlamalı"); 
+            RuleFor(c => c.DailyPrice).GreaterThan(0); 
 
 
         }
 
-        private bool StartWithA(string arg)
-        {
-            return arg.StartsWith("A");
-        }
     }
 }
