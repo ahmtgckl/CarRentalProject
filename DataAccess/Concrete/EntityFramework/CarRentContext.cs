@@ -12,7 +12,7 @@ namespace DataAccess.Concrete.EntityFramework
     {
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            optionsBuilder.UseSqlServer(@"Server=.;Database=CarRentDb;Trusted_Connection=true");
+            optionsBuilder.UseSqlServer(@"Server=localhost;Database=CarRentDb;Trusted_Connection=true");
 
         }
 
