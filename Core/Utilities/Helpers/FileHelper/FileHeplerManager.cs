@@ -10,6 +10,7 @@ namespace Core.Utilities.Helpers.FileHelper
 {
     public class FileHeplerManager : IFileHelper
     {
+
         public void Delete(string filePath)//Burada ki string filePath, 'CarImageManager'dan gelen dosyamın kaydedildiği adres ve adı 
         {
             if (File.Exists(filePath))//if kontrolü ile parametrede gelen adreste öyle bir dosya var mı diye kontrol ediliyor.
@@ -51,3 +52,5 @@ namespace Core.Utilities.Helpers.FileHelper
         }
     }
 }
+//IFormFile projemize bir dosya yüklemek için kulanılan yöntemdir, HttpRequest ile gönderilen bir dosyayı temsil eder.
+//FileStream, Stream ana soyut sınıfı kullanılarak genişletilmiş, belirtilen kaynak dosyalar üzerinde okuma/yazma/atlama gibi operasyonları yapmamıza yardımcı olan bir sınıftır

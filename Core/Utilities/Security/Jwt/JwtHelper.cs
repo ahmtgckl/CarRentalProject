@@ -14,23 +14,23 @@ namespace Core.Utilities.Security.Jwt
 {
     public class JwtHelper : ITokenHelper
     {
-        public IConfiguration Configuration { get; }
-        private TokenOptions _tokenOptions;
-        private DateTime _accessTokenExpiration;
+        public IConfiguration Configuration { get; } //benim API'm de ki appsettings'in içini okumama yarıyor.(Konfigürasyon dosyasını okumama yarıyor). IConfiguration=> Microsoft extensions kısmından çekildi
+        private TokenOptions _tokenOptions; //app settingste okuduğum değerleri bir nesneye atacağım. yukarıda ki congiguration' sınıfıyla okuduğum değerleri atacağım nesne
+        private DateTime _accessTokenExpiration; //access token ne zaman geçerliğini yitirecek (tarih)
         public JwtHelper(IConfiguration configuration)
         {
             Configuration = configuration;
-            _tokenOptions = Configuration.GetSection("TokenOptions").Get<TokenOptions>();
+            _tokenOptions = Configuration.GetSection("TokenOptions").Get<TokenOptions>(); //app settingssin içinde ki "TokenOptions" bölümünü al ve onu <TokenOptions> bu sınıfın değerlerini kullanarak maple, yani sıra sıra audince falan atadı içerisine
 
         }
         public AccessToken CreateToken(User user, List<OperationClaim> operationClaims)
         {
             _accessTokenExpiration = DateTime.Now.AddMinutes(_tokenOptions.AccessTokenExpiration);
-            var securityKey = SecurityKeyHelper.CreateSecurityKey(_tokenOptions.SecurityKey);
+            var securityKey = SecurityKeyHelper.CreateSecurityKey(_tokenOptions.SecurityKey); //Bir algoritmayı kullanarak şifreli bir token oluşturucaz, o tone'ı encrpt ederken kendi bildiğimiz özel bir anahtara ihtiyacımız var
             var signingCredentials = SigningCredentialsHelper.CreateSigningCredentials(securityKey);
             var jwt = CreateJwtSecurityToken(_tokenOptions, user, signingCredentials, operationClaims);
             var jwtSecurityTokenHandler = new JwtSecurityTokenHandler();
-            var token = jwtSecurityTokenHandler.WriteToken(jwt);
+            var token = jwtSecurityTokenHandler.WriteToken(jwt); //Token'ı yazdırmış oldum WriteToken(jwt)=> string e çevirdik
 
             return new AccessToken
             {
@@ -43,11 +43,11 @@ namespace Core.Utilities.Security.Jwt
         public JwtSecurityToken CreateJwtSecurityToken(TokenOptions tokenOptions, User user,
             SigningCredentials signingCredentials, List<OperationClaim> operationClaims)
         {
-            var jwt = new JwtSecurityToken(
+            var jwt = new JwtSecurityToken( //Token oluştururken benden istediği bilgileri ona veriyorum
                 issuer: tokenOptions.Issuer,
                 audience: tokenOptions.Audience,
                 expires: _accessTokenExpiration,
-                notBefore: DateTime.Now,
+                notBefore: DateTime.Now, //Token'ın geçerlik süresi şuandan önceyse geçerli değil
                 claims: SetClaims(user, operationClaims),
                 signingCredentials: signingCredentials
             );

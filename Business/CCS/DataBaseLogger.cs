@@ -4,7 +4,11 @@ using System.Text;
 
 namespace Business.CCS
 {
-    class DataBaseLogger
+    public class DataBaseLogger : ILogger
     {
+        public void Log()
+        {
+            Console.WriteLine("Veri tabanına loglandı");
+        }
     }
 }

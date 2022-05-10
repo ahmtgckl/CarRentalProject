@@ -6,8 +6,9 @@ namespace Core.Utilities.Security.Jwt
 {
     public class AccessToken
     {
-        public string Token { get; set; }
-        public DateTime Expiration { get; set; }
+        //AccesToken nesnelerim
+        public string Token { get; set; } //girş yapan kullanıcıya vereceğim token 
+        public DateTime Expiration { get; set; } // kullanıcının token süresinin gerçiliği.
 
     }
 }

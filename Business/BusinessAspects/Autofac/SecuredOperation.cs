@@ -11,6 +11,7 @@ using Business.Constants;
 
 namespace Business.BusinessAspects.Autofac
 {
+    // Jwt
     public class SecuredOperation : MethodInterception
     {
         private string[] _roles;
@@ -19,7 +20,7 @@ namespace Business.BusinessAspects.Autofac
         public SecuredOperation(string roles)
         {
             _roles = roles.Split(',');
-            _httpContextAccessor = ServiceTool.ServiceProvider.GetService<IHttpContextAccessor>();
+            _httpContextAccessor = ServiceTool.ServiceProvider.GetService<IHttpContextAccessor>(); //Belirtilen türe ait hizmet nesnesini alır.
 
         }
 

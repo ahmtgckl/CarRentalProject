@@ -10,7 +10,7 @@ namespace Core.Extensions
     {
         public static List<string> Claims(this ClaimsPrincipal claimsPrincipal, string claimType)
         {
-            var result = claimsPrincipal?.FindAll(claimType)?.Select(x => x.Value).ToList();
+            var result = claimsPrincipal?.FindAll(claimType)?.Select(x => x.Value).ToList(); //ClaimsPrincipal ile ise istekte bulunan kullanıcı eğer bir token göndermişse bu wepapimiz tarafından decrypt ediliyor yani çözülüyor, claimsprincipal.findall() ile de çözülmüş token içerisindeki claimleri okuyoruz.
             return result;
         }
 
