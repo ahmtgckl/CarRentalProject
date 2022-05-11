@@ -37,7 +37,6 @@
   <li> JWT Authentication </li>
   <li> Repository Design Pattern </li>
   <li> Cross Cutting Concerns </li>
-  <li> Caching </li>
   <li> Extensions </li>
   <li> Claim </li>
   <li> Exception Middleware </li>
