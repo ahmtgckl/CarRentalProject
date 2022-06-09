@@ -35,6 +35,8 @@ namespace Business.Concrete
         [CacheRemoveAspect("ICarService.Get")]
         public IResult Add(Car car)
         {
+
+            /*
             IResult result = BusinessRules.Run(
                 CheckIfCarDescriptionOfExists(car.Description), 
                 CheckIfCarCountOfBrandCorrect(car.BrandId), 
@@ -46,6 +48,8 @@ namespace Business.Concrete
             {
                 return result;
             }
+            */
+            
             _carDal.Add(car);
 
             return new SuccessResult(Messages.CarAdded);

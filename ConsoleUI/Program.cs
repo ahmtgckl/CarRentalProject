@@ -47,8 +47,8 @@ namespace ConsoleUI
             // 1-GÜNSEL  2- MERCEDES  3- BMW   4- AUDİ  5-VOSLSWAOGEN  6- VOLVO
             brandManager.Add(new Brand
             {
-                BrandId = 2,
-                BrandName = "MERCEDES"
+               
+                BrandName = "MITSUBISHI"
             });
 
             var result = brandManager.GetAll();
@@ -66,10 +66,10 @@ namespace ConsoleUI
             
             carManager.Add(new Car
             {
-                
-                BrandId = 4,
-                ColorId = 3,
-                ModelName="320i",
+               
+                BrandId = 1,
+                ColorId = 2,
+                ModelName="YYY",
                 ModelYear = 2015,
                 DailyPrice = 1300,
                 Description = "1.6 Motor, Benzinli, Otomatik vites"
@@ -82,7 +82,7 @@ namespace ConsoleUI
             {
                 foreach (var car in result.Data)
                 {
-                    Console.WriteLine(" => " +  car.Description + " - " + car.BrandName + " - " + car.ColorName + " - " + car.DailyPrice);
+                    Console.WriteLine(" => "+ car.ModelName +" - " +  car.Description + " - " + car.BrandName + " - " + car.ColorName + " - " + car.DailyPrice);
                 }
             }
             else
