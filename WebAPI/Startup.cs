@@ -38,6 +38,8 @@ namespace WebAPI
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllers();
+
+            services.AddCors();
             //services.AddSingleton<ICarService, CarManager>();
             //services.AddSingleton<ICarDal, EfCarDal>();
             //services.AddSingleton<IBrandService, BrandManager>();
@@ -50,7 +52,9 @@ namespace WebAPI
             //services.AddSingleton<IUserDal, EfUserDal>();
 
 
-            
+
+
+
 
 
             var tokenOptions = Configuration.GetSection("TokenOptions").Get<TokenOptions>();
@@ -87,13 +91,15 @@ namespace WebAPI
 
             }
 
-            app.UseCors(builder => builder.WithOrigins("https://localhost:44306/").AllowAnyHeader());
+            app.ConfigureCustomExceptionMiddleware();
+
+            app.UseCors(builder => builder.WithOrigins("http://localhost:4200").AllowAnyHeader());
 
             app.UseHttpsRedirection();
 
-            app.UseStaticFiles();
-
             app.UseRouting();
+
+            app.UseStaticFiles();
 
             app.UseAuthentication(); //JWT
 

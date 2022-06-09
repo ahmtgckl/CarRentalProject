@@ -28,7 +28,7 @@ namespace WebAPI.Controllers
         //    return BadRequest(result);
         //}
 
-        /*[HttpGet("GetByUserEmail")]
+        [HttpGet("GetByUserEmail")]
         public IActionResult GetByUserEmail(string email)
         {
             var result = _userService.GetByMail(email);
@@ -38,7 +38,7 @@ namespace WebAPI.Controllers
             }
             return BadRequest(result);
         }
-        */
+        
 
         // [HttpGet]
         //public IActionResult GetByCustomerId(int id)

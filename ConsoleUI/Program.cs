@@ -1,6 +1,5 @@
 ﻿using Business.Concrete;
 using DataAccess.Concrete.EntityFramework;
-using DataAccess.Concrete.InMemory;
 using Entities.Concrete;
 using System;
 
@@ -13,6 +12,8 @@ namespace ConsoleUI
             //CarTest();
             //BrandTest();
             //ColorTest();
+
+
 
 
 
@@ -63,12 +64,13 @@ namespace ConsoleUI
             
             carManager.Add(new Car
             {
-                CarId = 1,
-                BrandId = 1,
-                ColorId = 5,
-                ModelYear = 2021,
-                DailyPrice = 1000,
-                Description = "J9"
+                
+                BrandId = 4,
+                ColorId = 3,
+                ModelName="320i",
+                ModelYear = 2015,
+                DailyPrice = 1300,
+                Description = "1.6 Motor, Benzinli, Otomatik vites"
             });
 
 

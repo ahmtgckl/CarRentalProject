@@ -39,7 +39,7 @@ namespace Business.Concrete
             return new SuccessDataResult<List<Color>>(_colorDal.GetAll(),Messages.ColorsListed);
         }
 
-        public IDataResult<List<Color>> GetAllById(int colorId)
+        public IDataResult<List<Color>> GetByColorId(int colorId)
         {
             throw new NotImplementedException();
         }

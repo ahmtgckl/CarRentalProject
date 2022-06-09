@@ -16,36 +16,35 @@ namespace Business.Concrete
     {
         ICarImageDal _carImageDal;
         IFileHelper _fileHelper;
-
         public CarImageManager(ICarImageDal carImageDal, IFileHelper fileHelper)
         {
             _carImageDal = carImageDal;
             _fileHelper = fileHelper;
-
         }
         public IResult Add(IFormFile file, CarImage carImage)
         {
             IResult result = BusinessRules.Run(CheckIfCarImageLimit(carImage.CarId));
-            if (result!= null)
+            if (result != null)
             {
                 return result;
             }
             carImage.ImagePath = _fileHelper.Upload(file, PathConstants.ImagesPath);
             carImage.Date = DateTime.Now;
             _carImageDal.Add(carImage);
-            return new SuccessResult(Messages.CarImageAdded);
+            return new SuccessResult("Resim başarıyla yüklendi");
         }
 
         public IResult Delete(CarImage carImage)
         {
             _fileHelper.Delete(PathConstants.ImagesPath + carImage.ImagePath);
             _carImageDal.Delete(carImage);
-            return new SuccessResult(Messages.CarImageDeleted);
+            return new SuccessResult("Resim silindi");
         }
-
-        public IDataResult<List<CarImage>> GetAll()
+        public IResult Update(IFormFile file, CarImage carImage)
         {
-            return new SuccessDataResult<List<CarImage>>(_carImageDal.GetAll());
+            carImage.ImagePath = _fileHelper.Update(file, PathConstants.ImagesPath + carImage.ImagePath, PathConstants.ImagesPath);
+            _carImageDal.Update(carImage);
+            return new SuccessResult("Resim güncellendi");
         }
 
         public IDataResult<List<CarImage>> GetByCarId(int carId)
@@ -63,14 +62,10 @@ namespace Business.Concrete
             return new SuccessDataResult<CarImage>(_carImageDal.Get(c => c.Id == imageId));
         }
 
-        public IResult Update(IFormFile file, CarImage carImage)
+        public IDataResult<List<CarImage>> GetAll()
         {
-            carImage.ImagePath = _fileHelper.Update(file, PathConstants.ImagesPath + carImage.ImagePath, PathConstants.ImagesPath);
-            _carImageDal.Update(carImage);
-            return new SuccessResult(Messages.CarImageUpdated);
+            return new SuccessDataResult<List<CarImage>>(_carImageDal.GetAll());
         }
-
-
         private IResult CheckIfCarImageLimit(int carId)
         {
             var result = _carImageDal.GetAll(c => c.CarId == carId).Count;
@@ -78,11 +73,8 @@ namespace Business.Concrete
             {
                 return new ErrorResult();
             }
-            return new SuccessResult(Messages.CarAdded);
+            return new SuccessResult();
         }
-
-
-
         private IDataResult<List<CarImage>> GetDefaultImage(int carId)
         {
 
@@ -90,8 +82,6 @@ namespace Business.Concrete
             carImage.Add(new CarImage { CarId = carId, Date = DateTime.Now, ImagePath = "DefaultImage.jpg" });
             return new SuccessDataResult<List<CarImage>>(carImage);
         }
-
-
         private IResult CheckCarImage(int carId)
         {
             var result = _carImageDal.GetAll(c => c.CarId == carId).Count;

@@ -41,5 +41,7 @@ namespace Business.Constants
 
 
         public static string AuthorizationDenied = "Yetkiniz yok !";
+
+        public static string SameNameExist = "Aynı isim var";
     }
 }

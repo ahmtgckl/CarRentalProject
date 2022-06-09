@@ -58,6 +58,47 @@ namespace WebAPI.Controllers
             return BadRequest(result);
         }
 
+
+
+        [HttpGet("getbyrentalid")]
+        public IActionResult GetByRentalId(int rentalId)
+        {
+            var result = _rentalService.GetByRentalId(rentalId);
+            if (result.Success)
+            {
+                return Ok(result);
+            }
+            return BadRequest(result);
+        }
+
+
+        [HttpGet("getrentalsdetails")]
+        public IActionResult GetRentalsDetails()
+        {
+            var result = _rentalService.GetRentalsDetails();
+            if (result.Success)
+            {
+                return Ok(result);
+            }
+            return BadRequest(result);
+        }
+
+
+
+        [HttpGet("iscaravaible")]
+        public IActionResult IsCarAvaible(int cardId)
+        {
+            var result = _rentalService.IsCarAvaible(cardId);
+            if (result.Success)
+            {
+                return Ok(result);
+            }
+            return BadRequest(result);
+        }
+
+
+
+
         [HttpGet("totalprice")]
         public IActionResult TotalPrice(object totalAmountInfo)
         {
@@ -68,5 +109,8 @@ namespace WebAPI.Controllers
             //}
             //return BadRequest(result);
         }
+
+
+        
     }
 }
