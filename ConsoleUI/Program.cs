@@ -14,9 +14,11 @@ namespace ConsoleUI
             //ColorTest();
 
 
+            /*
 
-
-
+            CarImageManager carImageManager = new CarImageManager(new EfCarImageDal(), );
+            carImageManager.Add(new CarImage { CarId = 1, Date = DateTime.Now, ImagePath="1.jpg");
+            */
 
 
         }
