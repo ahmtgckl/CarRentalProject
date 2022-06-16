@@ -30,7 +30,7 @@ namespace Business.Concrete
             _brandService = brandService;
         }
 
-        [SecuredOperation("admin, car.add")]
+        //[SecuredOperation("admin, car.add")]
         [ValidationAspect(typeof(CarValidator))]
         [CacheRemoveAspect("ICarService.Get")]
         public IResult Add(Car car)
@@ -56,7 +56,7 @@ namespace Business.Concrete
             
         }
 
-        [SecuredOperation("admin, car.add")]
+        //[SecuredOperation("admin, car.add")]
         [CacheRemoveAspect("ICarService.Get")]
         public IResult Delete(Car car)
         {

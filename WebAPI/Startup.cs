@@ -38,6 +38,7 @@ namespace WebAPI
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllers();
+            services.AddSwaggerDocument();
 
             services.AddCors();
             //services.AddSingleton<ICarService, CarManager>();
@@ -100,6 +101,10 @@ namespace WebAPI
             app.UseRouting();
 
             app.UseStaticFiles();
+
+            app.UseOpenApi();
+
+            app.UseSwaggerUi3();
 
             app.UseAuthentication(); //JWT
 
